@@ -1,0 +1,15 @@
+#ifndef __PAWN_H__
+#define __PAWN_H__
+
+#include "piece.h"
+
+class Pawn : public Piece {
+public:
+  Pawn(Color color, Coordinate coordinate) : Piece(color, coordinate) {}
+
+  Type get_type() const { return Type::PAWN; }
+
+  std::vector<Coordinate> get_candidate_moves() const;
+}
+
+#endif

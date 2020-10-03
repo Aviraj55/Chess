@@ -9,4 +9,3 @@ _The application does not have an installation procedure yet._
 ### Authors
 - Aviraj Mukherjee
 - Connor Roizman
-
