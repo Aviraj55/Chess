@@ -1,25 +1,30 @@
+PROGRAM = chess
+
 SRC = src
 BIN = bin
 
-GTKMM_ARGS = `pkg-config gtkmm-3.0 --cflags --libs`
-C_FLAGS = -Wall -Wextra -g
-ARGS = $(C_FLAGS) $(GTKMM_ARGS)
+GTKMMARGS = `pkg-config gtkmm-3.0 --cflags --libs`
+CXXFLAGS = $(GTKMMARGS) -Wall -Wextra -g
+
+# DEFAULT TARGET
+build: $(PROGRAM)
 
 # COMPILATION/LINKING
-main: piece pawn board
-	g++ $(ARGS) $(SRC)/main.cpp $(BIN)/piece.o $(BIN)/pawn.o $(BIN)/board.o -o chess.out
+$(PROGRAM): pawn.o piece.o board.o chessWindow.o
+	$(CXX) $(CXXFLAGS) $(SRC)/main.cpp $(BIN)/pawn.o $(BIN)/piece.o $(BIN)/board.o $(BIN)/chessWindow.o -o $@
 
-piece:
-	g++ $(ARGS) -c $(SRC)/game/piece/piece.cpp -o $(BIN)/piece.o
+pawn.o: $(SRC)/game/piece/pawn.h $(SRC)/game/piece/pawn.cpp
+	$(CXX) $(CXXFLAGS) -c $(SRC)/game/piece/pawn.cpp -o $(BIN)/pawn.o
 
-pawn:
-	g++ $(ARGS) -c $(SRC)/game/piece/pawn.cpp -o $(BIN)/pawn.o
+piece.o: $(SRC)/game/piece/piece.h $(SRC)/game/piece/piece.cpp
+	$(CXX) $(CXXFLAGS) -c $(SRC)/game/piece/piece.cpp -o $(BIN)/piece.o
 
-board:
-	g++ $(ARGS) -c $(SRC)/game/board.cpp -o $(BIN)/board.o
+board.o: $(SRC)/game/board.h $(SRC)/game/board.cpp
+	$(CXX) $(CXXFLAGS) -c $(SRC)/game/board.cpp -o $(BIN)/board.o
+
+chessWindow.o: $(SRC)/gui/chessWindow.h $(SRC)/gui/chessWindow.cpp
+	$(CXX) $(CXXFLAGS) -c $(SRC)/gui/chessWindow.cpp -o $(BIN)/chessWindow.o
 
 # TASKS
 clean:
-	rm -f $(BIN)/*.o
-
-build: clean main
+	rm -f $(PROGRAM) $(BIN)/*.o
