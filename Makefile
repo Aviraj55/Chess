@@ -11,19 +11,19 @@ build: $(PROGRAM)
 
 # COMPILATION/LINKING
 $(PROGRAM): pawn.o piece.o board.o chessWindow.o
-	$(CXX) $(CXXFLAGS) $(SRC)/main.cpp $(BIN)/pawn.o $(BIN)/piece.o $(BIN)/board.o $(BIN)/chessWindow.o -o $@
+	$(CXX) $(SRC)/main.cpp $(BIN)/pawn.o $(BIN)/piece.o $(BIN)/board.o $(BIN)/chessWindow.o $(CXXFLAGS) -o $@
 
 pawn.o: $(SRC)/game/piece/pawn.h $(SRC)/game/piece/pawn.cpp
-	$(CXX) $(CXXFLAGS) -c $(SRC)/game/piece/pawn.cpp -o $(BIN)/pawn.o
+	$(CXX) -c $(SRC)/game/piece/pawn.cpp $(CXXFLAGS) -o $(BIN)/pawn.o
 
 piece.o: $(SRC)/game/piece/piece.h $(SRC)/game/piece/piece.cpp
-	$(CXX) $(CXXFLAGS) -c $(SRC)/game/piece/piece.cpp -o $(BIN)/piece.o
+	$(CXX) -c $(SRC)/game/piece/piece.cpp $(CXXFLAGS) -o $(BIN)/piece.o
 
 board.o: $(SRC)/game/board.h $(SRC)/game/board.cpp
-	$(CXX) $(CXXFLAGS) -c $(SRC)/game/board.cpp -o $(BIN)/board.o
+	$(CXX) -c $(SRC)/game/board.cpp $(CXXFLAGS) -o $(BIN)/board.o
 
 chessWindow.o: $(SRC)/gui/chessWindow.h $(SRC)/gui/chessWindow.cpp
-	$(CXX) $(CXXFLAGS) -c $(SRC)/gui/chessWindow.cpp -o $(BIN)/chessWindow.o
+	$(CXX) -c $(SRC)/gui/chessWindow.cpp $(CXXFLAGS) -o $(BIN)/chessWindow.o
 
 # TASKS
 clean:
