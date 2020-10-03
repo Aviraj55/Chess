@@ -10,8 +10,8 @@ CXXFLAGS = $(GTKMMARGS) -Wall -Wextra -g
 build: $(PROGRAM)
 
 # COMPILATION/LINKING
-$(PROGRAM): pawn.o knight.o king.o piece.o board.o chessWindow.o
-	$(CXX) $(SRC)/main.cpp $(BIN)/pawn.o $(BIN)/knight.o $(BIN)/king.o $(BIN)/piece.o $(BIN)/board.o $(BIN)/chessWindow.o $(CXXFLAGS) -o $@
+$(PROGRAM): pawn.o knight.o king.o queen.o piece.o board.o chessWindow.o
+	$(CXX) $(SRC)/main.cpp $(BIN)/pawn.o $(BIN)/knight.o $(BIN)/king.o $(BIN)/queen.o $(BIN)/piece.o $(BIN)/board.o $(BIN)/chessWindow.o $(CXXFLAGS) -o $@
 
 pawn.o: $(SRC)/game/piece/pawn.h $(SRC)/game/piece/pawn.cpp
 	$(CXX) -c $(SRC)/game/piece/pawn.cpp $(CXXFLAGS) -o $(BIN)/pawn.o
@@ -21,6 +21,9 @@ knight.o: $(SRC)/game/piece/knight.h $(SRC)/game/piece/knight.cpp
 
 king.o: $(SRC)/game/piece/king.h $(SRC)/game/piece/king.cpp
 	$(CXX) -c $(SRC)/game/piece/king.cpp $(CXXFLAGS) -o $(BIN)/king.o
+
+queen.o: $(SRC)/game/piece/queen.h $(SRC)/game/piece/queen.cpp
+	$(CXX) -c $(SRC)/game/piece/queen.cpp $(CXXFLAGS) -o $(BIN)/queen.o
 
 piece.o: $(SRC)/game/piece/piece.h $(SRC)/game/piece/piece.cpp
 	$(CXX) -c $(SRC)/game/piece/piece.cpp $(CXXFLAGS) -o $(BIN)/piece.o
