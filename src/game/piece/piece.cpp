@@ -26,3 +26,33 @@ std::vector<Coordinate> Piece::get_moves() const {
 
   return moves;
 }
+
+std::vector<Coordinate> Piece::get_straight_moves() const {
+  std::vector<Coordinate> straight_moves;
+  for (int offsets[2] : {{1, 0}, {0, -1}, {-1, 0}, {0, 1}}) {
+    Coordinate dest(coordinate_.get_rank() + offsets[0],
+                    coordinate_.get_file() + offsets[1]);
+    for (; board_->contains(dest) && board_->piece_at(dest) == nullptr;
+         dest = Coordinate(dest.get_rank() + offsets[0],
+                           dest.get_file() + offsets[1])) {
+      straight_moves.push_back(dest);
+    }
+  }
+
+  return straight_moves;
+}
+
+std::vector<Coordinate> Piece::get_diagonal_moves() const {
+  std::vector<Coordinate> diagonal_moves;
+  for (int offsets[2] : {{1, 1}, {1, -1}, {-1, -1}, {-1, 1}}) {
+    Coordinate dest(coordinate_.get_rank() + offsets[0],
+                    coordinate_.get_file() + offsets[1]);
+    for (; board_->contains(dest) && board_->piece_at(dest) == nullptr;
+         dest = Coordinate(dest.get_rank() + offsets[0],
+                           dest.get_file() + offsets[1])) {
+      diagonal_moves.push_back(dest);
+    }
+  }
+
+  return diagonal_moves;
+}

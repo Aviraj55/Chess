@@ -27,6 +27,9 @@ protected:
   Coordinate coordinate_;
 
   std::vector<Coordinate> move_history_;
+
+  std::vector<Coordinate> get_straight_moves() const;
+  std::vector<Coordinate> get_diagonal_moves() const;
 };
 
 #endif
