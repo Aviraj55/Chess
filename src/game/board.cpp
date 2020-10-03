@@ -10,6 +10,8 @@ Board::Board() {
       board[rank][file] = nullptr;
     }
   }
+
+  // TODO: Populate the board with pieces
 }
 
 Piece *Board::piece_at(const Coordinate &coordinate) {
