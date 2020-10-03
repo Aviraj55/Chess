@@ -1,8 +1,8 @@
-#include "knight.h"
+#include "queen.h"
 
 #include "../board.h"
 
-std::vector<Coordinate> Knight::get_candidate_moves() const {
+std::vector<Coordinate> Queen::get_candidate_moves() const {
   std::vector<Coordinate> candidate_moves;
   std::vector<Coordinate> straight_moves(get_straight_moves());
   std::vector<Coordinate> diagonal_moves(get_diagonal_moves());
