@@ -1,4 +1,4 @@
-#include "game/piece.h"
+#include "game/piece/piece.h"
 #include <gtkmm.h>
 
 int main() {}

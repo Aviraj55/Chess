@@ -1,6 +1,6 @@
 #include "board.h"
 
-#include "piece.h"
+#include "piece/piece.h"
 
 Board::Board() {
   board = new Piece **[HEIGHT];

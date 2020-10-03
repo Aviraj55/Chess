@@ -1,6 +1,6 @@
 #include "pawn.h"
 
-#include "board.h"
+#include "../board.h"
 
 std::vector<Coordinate> Pawn::get_candidate_moves() const {
   std::vector<Coordinate> candidate_moves;
