@@ -10,7 +10,7 @@ CXXFLAGS = $(GTKMMARGS) -Wall -Wextra -g
 build: $(PROGRAM)
 
 # COMPILATION/LINKING
-$(PROGRAM): pawn.o knight.o queen.o king.o piece.o board.o chessWindow.o
+$(PROGRAM): $(BIN)/pawn.o $(BIN)/knight.o $(BIN)/queen.o $(BIN)/king.o $(BIN)/piece.o $(BIN)/board.o $(BIN)/chessWindow.o
 	$(CXX) $(SRC)/main.cpp $(BIN)/pawn.o $(BIN)/knight.o $(BIN)/queen.o $(BIN)/king.o $(BIN)/piece.o $(BIN)/board.o $(BIN)/chessWindow.o $(CXXFLAGS) -o $@
 
 pawn.o: $(SRC)/game/piece/pawn.h $(SRC)/game/piece/pawn.cpp
