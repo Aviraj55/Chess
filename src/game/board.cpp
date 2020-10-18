@@ -62,6 +62,14 @@ Board::Board() {
   board[0][4] = new King(this, Piece::Color::WHITE, Coordinate(0, 4));
   board[HEIGHT - 1][4] =
       new King(this, Piece::Color::BLACK, Coordinate(HEIGHT - 1, 4));
+
+  for (int rank = 0; rank < HEIGHT; ++rank) {
+    for (int file = 0; file < WIDTH; ++file) {
+      if (board[rank][file] != nullptr) {
+        pieces_[board[rank][file]->get_color()].insert(board[rank][file]);
+      }
+    }
+  }
 }
 
 Board &Board::operator=(const Board &b) {
@@ -130,7 +138,7 @@ void Board::destroy() {
   delete[] board;
 }
 
-std::pair<bool, Piece *> in_check() {
+std::pair<bool, Piece *> Board::in_check() {
   for (int rank = 0; rank < HEIGHT; ++rank) {
     for (int file = 0; file < WIDTH; ++file) {
       std::vector<Coordinate> moves = board[rank][file]->get_moves();
@@ -152,6 +160,13 @@ std::pair<bool, Piece *> Board::checkmated() {
     return std::make_pair(false, nullptr);
   }
 
-  // TODO: Check every possible move the player can make to move the king out of
-  // check
+  Piece *king = in_check_.second;
+  std::unordered_set<Piece *> &pieces = pieces_[king->get_color()];
+  for (Piece *piece : pieces) {
+    if (!piece->get_moves().empty()) {
+      return std::make_pair(false, nullptr);
+    }
+  }
+
+  return std::make_pair(true, king);
 }
