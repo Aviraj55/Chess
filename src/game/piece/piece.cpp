@@ -29,6 +29,8 @@ std::vector<Coordinate> Piece::get_moves() const {
 
 void Piece::move(const Coordinate &dest) {
   board_->board[coordinate_.get_rank()][coordinate_.get_file()] = nullptr;
+  board_->pieces_[color_].erase(
+      board_->board[dest.get_rank()][dest.get_file()]);
   delete board_->board[dest.get_rank()][dest.get_file()];
   board_->board[dest.get_rank()][dest.get_file()] = this;
 

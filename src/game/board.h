@@ -2,8 +2,9 @@
 #define __BOARD_H__
 
 #include "coordinate.h"
-
-class Piece;
+#include "piece/piece.h"
+#include <unordered_map>
+#include <unordered_set>
 
 class Board {
 public:
@@ -27,12 +28,13 @@ public:
 
 private:
   Piece ***board;
+  std::unordered_map<Piece::Color, std::unordered_set<Piece *>> pieces_;
 
   void copy(const Board &b);
   void destroy();
 
-  std::pair<bool, Piece::Color> in_check();
-  std::pair<bool, Piece::Color> checkmated();
+  std::pair<bool, Piece *> in_check() const;
+  std::pair<bool, Piece *> checkmated() const;
 };
 
 #endif
