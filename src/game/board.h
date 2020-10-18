@@ -10,7 +10,12 @@ public:
   static const int WIDTH = 8;
   static const int HEIGHT = 8;
 
+  friend class Piece;
+
   Board();
+  Board(const Board &b) { copy(b); }
+  Board &operator=(const Board &b);
+  ~Board() { destroy(); }
 
   bool contains(const Coordinate &coordinate) const {
     return coordinate.get_rank() >= 0 && coordinate.get_file() >= 0 &&
@@ -22,6 +27,12 @@ public:
 
 private:
   Piece ***board;
+
+  void copy(const Board &b);
+  void destroy();
+
+  std::pair<bool, Piece::Color> in_check();
+  std::pair<bool, Piece::Color> checkmated();
 };
 
 #endif

@@ -13,6 +13,7 @@ public:
 
   Piece(Board *board, Color color, Coordinate coordinate)
       : board_(board), color_(color), coordinate_(coordinate) {}
+  virtual ~Piece() {}
 
   Color get_color() const { return color_; }
   Coordinate get_coordinate() const { return coordinate_; }
@@ -20,6 +21,8 @@ public:
 
   virtual std::vector<Coordinate> get_candidate_moves() const = 0;
   std::vector<Coordinate> get_moves() const;
+
+  void move(const Coordinate &dest);
 
 protected:
   Board *board_;

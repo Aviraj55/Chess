@@ -64,6 +64,14 @@ Board::Board() {
       new King(this, Piece::Color::BLACK, Coordinate(HEIGHT - 1, 4));
 }
 
+Board &Board::operator=(const Board &b) {
+  if (this != &b) {
+    destroy();
+    copy(b);
+  }
+  return *this;
+}
+
 Piece *Board::piece_at(const Coordinate &coordinate) {
   if (!contains(coordinate)) {
     return nullptr;
@@ -76,4 +84,74 @@ const Piece *Board::piece_at(const Coordinate &coordinate) const {
     return nullptr;
   }
   return board[coordinate.get_rank()][coordinate.get_file()];
+}
+
+void Board::copy(const Board &b) {
+  board = new Piece **[HEIGHT];
+  for (int rank = 0; rank < HEIGHT; ++rank) {
+    for (int file = 0; file < WIDTH; ++file) {
+      switch (b.board[rank][file]->get_type()) {
+      case Piece::Type::PAWN:
+        board[rank][file] =
+            new Pawn(*dynamic_cast<Pawn *>(b.board[rank][file]));
+        break;
+      case Piece::Type::KNIGHT:
+        board[rank][file] =
+            new Knight(*dynamic_cast<Knight *>(b.board[rank][file]));
+        break;
+      case Piece::Type::BISHOP:
+        board[rank][file] =
+            new Bishop(*dynamic_cast<Bishop *>(b.board[rank][file]));
+        break;
+      case Piece::Type::ROOK:
+        board[rank][file] =
+            new Rook(*dynamic_cast<Rook *>(b.board[rank][file]));
+        break;
+      case Piece::Type::QUEEN:
+        board[rank][file] =
+            new Queen(*dynamic_cast<Queen *>(b.board[rank][file]));
+        break;
+      case Piece::Type::KING:
+        board[rank][file] =
+            new King(*dynamic_cast<King *>(b.board[rank][file]));
+        break;
+      }
+    }
+  }
+}
+
+void Board::destroy() {
+  for (int rank = 0; rank < HEIGHT; ++rank) {
+    for (int file = 0; file < WIDTH; ++file) {
+      delete board[rank][file];
+    }
+    delete[] board[rank];
+  }
+  delete[] board;
+}
+
+std::pair<bool, Piece *> in_check() {
+  for (int rank = 0; rank < HEIGHT; ++rank) {
+    for (int file = 0; file < WIDTH; ++file) {
+      std::vector<Coordinate> moves = board[rank][file]->get_moves();
+      for (const Coordinate &move : moves) {
+        if (board[move.get_rank()][move.get_file()]->get_type() ==
+            Piece::Type::KING) {
+          return std::make_pair(true, board[move.get_rank()][move.get_file()]);
+        }
+      }
+    }
+  }
+
+  return std::make_pair(false, nullptr);
+}
+
+std::pair<bool, Piece *> Board::checkmated() {
+  std::pair<bool, Piece *> in_check_ = in_check();
+  if (!in_check_.first) {
+    return std::make_pair(false, nullptr);
+  }
+
+  // TODO: Check every possible move the player can make to move the king out of
+  // check
 }
