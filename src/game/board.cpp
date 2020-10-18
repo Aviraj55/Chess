@@ -129,3 +129,29 @@ void Board::destroy() {
   }
   delete[] board;
 }
+
+std::pair<bool, Piece *> in_check() {
+  for (int rank = 0; rank < HEIGHT; ++rank) {
+    for (int file = 0; file < WIDTH; ++file) {
+      std::vector<Coordinate> moves = board[rank][file]->get_moves();
+      for (const Coordinate &move : moves) {
+        if (board[move.get_rank()][move.get_file()]->get_type() ==
+            Piece::Type::KING) {
+          return std::make_pair(true, board[move.get_rank()][move.get_file()]);
+        }
+      }
+    }
+  }
+
+  return std::make_pair(false, nullptr);
+}
+
+std::pair<bool, Piece *> Board::checkmated() {
+  std::pair<bool, Piece *> in_check_ = in_check();
+  if (!in_check_.first) {
+    return std::make_pair(false, nullptr);
+  }
+
+  // TODO: Check every possible move the player can make to move the king out of
+  // check
+}

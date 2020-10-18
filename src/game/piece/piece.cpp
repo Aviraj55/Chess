@@ -27,6 +27,14 @@ std::vector<Coordinate> Piece::get_moves() const {
   return moves;
 }
 
+void Piece::move(const Coordinate &dest) {
+  board_->board[coordinate_.get_rank()][coordinate_.get_file()] = nullptr;
+  delete board_->board[dest.get_rank()][dest.get_file()];
+  board_->board[dest.get_rank()][dest.get_file()] = this;
+
+  move_history_.push_back(dest);
+}
+
 std::vector<Coordinate> Piece::get_straight_moves() const {
   std::vector<Coordinate> straight_moves;
   std::vector<std::vector<int>> dirs{{1, 0}, {0, -1}, {-1, 0}, {0, 1}};

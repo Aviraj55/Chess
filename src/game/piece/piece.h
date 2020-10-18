@@ -22,6 +22,8 @@ public:
   virtual std::vector<Coordinate> get_candidate_moves() const = 0;
   std::vector<Coordinate> get_moves() const;
 
+  void move(const Coordinate &dest);
+
 protected:
   Board *board_;
   Color color_;
