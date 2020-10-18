@@ -33,8 +33,8 @@ private:
   void copy(const Board &b);
   void destroy();
 
-  std::pair<bool, Piece *> in_check();
-  std::pair<bool, Piece *> checkmated();
+  std::pair<bool, Piece *> in_check() const;
+  std::pair<bool, Piece *> checkmated() const;
 };
 
 #endif

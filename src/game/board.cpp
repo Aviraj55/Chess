@@ -138,7 +138,7 @@ void Board::destroy() {
   delete[] board;
 }
 
-std::pair<bool, Piece *> Board::in_check() {
+std::pair<bool, Piece *> Board::in_check() const {
   for (int rank = 0; rank < HEIGHT; ++rank) {
     for (int file = 0; file < WIDTH; ++file) {
       std::vector<Coordinate> moves = board[rank][file]->get_moves();
@@ -154,17 +154,20 @@ std::pair<bool, Piece *> Board::in_check() {
   return std::make_pair(false, nullptr);
 }
 
-std::pair<bool, Piece *> Board::checkmated() {
+std::pair<bool, Piece *> Board::checkmated() const {
   std::pair<bool, Piece *> in_check_ = in_check();
   if (!in_check_.first) {
     return std::make_pair(false, nullptr);
   }
 
   Piece *king = in_check_.second;
-  std::unordered_set<Piece *> &pieces = pieces_[king->get_color()];
-  for (Piece *piece : pieces) {
-    if (!piece->get_moves().empty()) {
-      return std::make_pair(false, nullptr);
+  std::unordered_map<Piece::Color, std::unordered_set<Piece *>>::const_iterator
+      pieces_itr = pieces_.find(king->get_color());
+  if (pieces_itr != pieces_.end()) {
+    for (Piece *piece : pieces_itr->second) {
+      if (!piece->get_moves().empty()) {
+        return std::make_pair(false, nullptr);
+      }
     }
   }
 
