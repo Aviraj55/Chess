@@ -26,15 +26,15 @@ public:
   Piece *piece_at(const Coordinate &coordinate);
   const Piece *piece_at(const Coordinate &coordinate) const;
 
+  std::pair<bool, Piece *> in_check() const;
+  std::pair<bool, Piece *> checkmated() const;
+
 private:
   Piece ***board;
   std::unordered_map<Piece::Color, std::unordered_set<Piece *>> pieces_;
 
   void copy(const Board &b);
   void destroy();
-
-  std::pair<bool, Piece *> in_check() const;
-  std::pair<bool, Piece *> checkmated() const;
 };
 
 #endif

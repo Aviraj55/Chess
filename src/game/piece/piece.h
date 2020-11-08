@@ -19,6 +19,10 @@ public:
   Coordinate get_coordinate() const { return coordinate_; }
   virtual Type get_type() const = 0;
 
+  const std::vector<Coordinate> &get_move_history() const {
+    return move_history_;
+  }
+
   virtual std::vector<Coordinate> get_candidate_moves() const = 0;
   std::vector<Coordinate> get_moves() const;
 
