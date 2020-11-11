@@ -19,7 +19,12 @@ std::vector<Coordinate> Piece::get_moves() const {
       continue;
     }
 
-    // TODO: Prevent moves which put the king in check
+    // Prevent moves which put the king in check
+    Board candidate_board(*board_);
+    candidate_board.piece_at(get_coordinate())->move(move);
+    if (candidate_board.in_check().second->color_ == color_) {
+      continue;
+    }
 
     moves.push_back(move);
   }
